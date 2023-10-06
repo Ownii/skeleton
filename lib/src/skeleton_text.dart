@@ -54,7 +54,7 @@ class TextSkeleton extends StatelessWidget {
     final scaleFactor = MediaQuery.textScaleFactorOf(context);
     final textHeightBehavior =
         DefaultTextStyle.of(context).textHeightBehavior ??
-            DefaultTextHeightBehavior.of(context);
+            DefaultTextHeightBehavior.maybeOf(context);
 
     final painter = TextPainter(
         text: span,
@@ -85,11 +85,10 @@ class TextSkeleton extends StatelessWidget {
               height: size.height,
               child: CustomPaint(
                 painter: SkeletonPainter(
-                  painter: painter,
-                  text: text,
-                  align: textAlign,
-                  color: SkeletonStyle.of(context).color
-                ),
+                    painter: painter,
+                    text: text,
+                    align: textAlign,
+                    color: SkeletonStyle.of(context).color),
               ),
             );
           },

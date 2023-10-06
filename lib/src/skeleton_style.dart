@@ -1,30 +1,47 @@
 import 'package:flutter/material.dart';
 
-class SkeletonStyle extends ThemeExtension<SkeletonStyle> {
-
+class SkeletonTheme extends ThemeExtension<SkeletonTheme> {
   final Color color;
 
-  SkeletonStyle({required this.color});
+  SkeletonTheme({required this.color});
 
   @override
-  ThemeExtension<SkeletonStyle> copyWith({Color? color}) => SkeletonStyle(color: color ?? this.color);
+  ThemeExtension<SkeletonTheme> copyWith({Color? color}) =>
+      SkeletonTheme(color: color ?? this.color);
 
   @override
-  ThemeExtension<SkeletonStyle> lerp(ThemeExtension<SkeletonStyle>? other, double t) {
-    if (other is! SkeletonStyle) {
+  ThemeExtension<SkeletonTheme> lerp(
+      ThemeExtension<SkeletonTheme>? other, double t) {
+    if (other is! SkeletonTheme) {
       return this;
     }
 
-    return SkeletonStyle(color: Color.lerp(color, other.color, t) ?? color);
+    return SkeletonTheme(color: Color.lerp(color, other.color, t) ?? color);
   }
 
-  static final SkeletonStyle _defaultStyle =  SkeletonStyle(color: Colors.grey[400]!);
+  static final SkeletonTheme defaultStyle =
+      SkeletonTheme(color: Colors.grey[400]!);
+}
 
-  static SkeletonStyle of(BuildContext context) {
-    final customThemeStyle = Theme.of(context).extension<SkeletonStyle>();
-    if( customThemeStyle != null ) return customThemeStyle;
+class SkeletonStyle extends InheritedWidget {
+  final Color color;
 
-    return _defaultStyle;
+  const SkeletonStyle({super.key, required this.color, required super.child});
+
+  static SkeletonStyle? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<SkeletonStyle>();
   }
 
+  static SkeletonTheme of(BuildContext context) {
+    final style = maybeOf(context);
+    if (style != null) return SkeletonTheme(color: style.color);
+    final customThemeStyle = Theme.of(context).extension<SkeletonTheme>();
+    if (customThemeStyle != null) return customThemeStyle;
+
+    return SkeletonTheme.defaultStyle;
+  }
+
+  @override
+  bool updateShouldNotify(covariant SkeletonStyle oldWidget) =>
+      color != oldWidget.color;
 }
