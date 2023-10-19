@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'skeleton_loading.dart';
-import 'pulsing.dart';
 
-typedef SkeletonWidgetBuilder<T> = Widget Function(BuildContext context, T data);
-typedef SkeletonErrorBuilder = Widget Function(BuildContext context, dynamic error);
+import 'pulsing.dart';
+import 'skeleton_loading.dart';
+
+typedef SkeletonWidgetBuilder<T> = Widget Function(
+    BuildContext context, T data);
+typedef SkeletonErrorBuilder = Widget Function(
+    BuildContext context, dynamic error);
 
 class SkeletonFutureBuilder<T> extends StatelessWidget {
   final Future<T> future;
@@ -23,7 +26,9 @@ class SkeletonFutureBuilder<T> extends StatelessWidget {
   Widget build(BuildContext context) => FutureBuilder<T>(
       future: future,
       builder: (context, snapshot) {
-        if (snapshot.hasError || (snapshot.connectionState == ConnectionState.done && snapshot.data == null)) {
+        if (snapshot.hasError ||
+            (snapshot.connectionState == ConnectionState.done &&
+                snapshot.data == null)) {
           return error(context, snapshot.error);
         }
 

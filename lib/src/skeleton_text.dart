@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'skeleton_style.dart';
-import 'wrap_if.dart';
 
+import 'skeleton_style.dart';
 import 'skeleton_widget.dart';
+import 'wrap_if.dart';
 
 class SkeletonText extends StatelessWidget with SkeletonWidget {
   final String data;
@@ -72,7 +72,7 @@ class TextSkeleton extends StatelessWidget {
   Widget build(BuildContext context) => WrapIf(
         condition: maxLines == 1,
         wrapper: (child) => SizedBox(
-          height: (_effectiveStyle(context).fontSize ?? 14) *
+          height: (_effectiveStyle(context).fontSize ?? 16) *
               (_effectiveStyle(context).height ?? 1.25),
           child: child,
         ),
